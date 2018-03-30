@@ -1,0 +1,53 @@
+'use strict';
+
+/* global $, jQuery */
+
+function solution() {
+var commentListTag = $('.comment-list');
+var count = $(".comment-list").data("count");
+                
+$.ajax({
+  method: "GET",
+  url: "https://www.example.com/comments?count=" + count,
+  dataType: "json",
+  beforeSend: function() {
+    $('.comment-list').html("Loading...");
+  }      
+})
+  .success(function(data) {
+  var comments = data;
+  var list = comments.map(function(comment) {
+    return '<div class="comment-item">' +
+      '<div class="comment-item__username">' +
+      comment.username +
+      "</div>" +
+      '<div class="comment-item__message">' +
+      comment.message +
+      "</div>" +
+      "</div>";
+  });
+  $('.comment-list').html(list.join(""));
+})
+  .fail(function(data) {
+     var comments = [{
+    "id": 123,
+    "username": "User 1",
+    "message": "Cool product!"
+}, {
+    "id": 456,
+    "username": "User 2",
+    "message": "Didn't like it that much"
+}]
+  var list = comments.map(function(comment) {
+    return '<div class="comment-item">' +
+      '<div class="comment-item__username">' +
+      comment.username +
+      "</div>" +
+      '<div class="comment-item__message">' +
+      comment.message +
+      "</div>" +
+      "</div>";
+  });
+  $('.comment-list').html(list.join(""));
+});
+}
