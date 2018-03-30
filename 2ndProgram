@@ -1,0 +1,31 @@
+'use strict';
+
+/* global CustomError, getLikedBrands, getTopBrandsForGender */
+
+function solution(U, N) {
+   return new Promise((resolve, reject) => {
+        const uniq = list => Array.from( new Set(list) )
+        getLikedBrands(U.id).then(likedBrands => likedBrands.length >= N
+            ? resolve(
+                likedBrands
+                    .slice(0, N)
+                    .map(i => i.name)
+            )
+
+          
+            : getTopBrandsForGender(U.gender).then(topBrands => {
+
+               
+                const allBrands = uniq(
+                    [...likedBrands, ...topBrands]
+                    .map(i => i.name)
+                )
+
+                allBrands.length >= N
+                    ? resolve(allBrands.slice(0, N))
+                   
+                    : reject(new CustomError('Not enough data'))
+            })
+        )
+    });
+}
