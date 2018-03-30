@@ -27,27 +27,27 @@ $.ajax({
       "</div>";
   });
   $('.comment-list').html(list.join(""));
-})
-  .fail(function(data) {
-     var comments = [{
-    "id": 123,
-    "username": "User 1",
-    "message": "Cool product!"
-}, {
-    "id": 456,
-    "username": "User 2",
-    "message": "Didn't like it that much"
-}]
-  var list = comments.map(function(comment) {
-    return '<div class="comment-item">' +
-      '<div class="comment-item__username">' +
-      comment.username +
-      "</div>" +
-      '<div class="comment-item__message">' +
-      comment.message +
-      "</div>" +
-      "</div>";
-  });
-  $('.comment-list').html(list.join(""));
+}).fail(function(err) {
+      //when the API is not giving any response
+    var data ={
+        "id": 123,
+        "username": "User 1",
+        "message": "Cool product!"      
+    }
+    var comments=[]
+    for(var i=1;i<count;i++){
+        comments.push(data)
+    }
+    var list = comments.map(function(comment) {
+        return '<div class="comment-item">' +
+        '<div class="comment-item__username">' +
+        comment.username +
+        "</div>" +
+        '<div class="comment-item__message">' +
+        comment.message +
+        "</div>" +
+        "</div>";
+        });
+    $('.comment-list').html(list.join(""));
 });
 }
